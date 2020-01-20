@@ -1,0 +1,27 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: Fetch tools
+        run: go get -v golang.org/x/lint/golint
+
+      - name: Test and lint
+        run: |
+          go test ./...
+          go list ./... | xargs -n1 golint -set_exit_status
+
+      - name: Build
+        run: go build -v .
