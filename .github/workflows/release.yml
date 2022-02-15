@@ -10,7 +10,7 @@ jobs:
     name: Build
     strategy:
       matrix:
-        go: [1.13.6]
+        go: [1.17.7]
     runs-on: ubuntu-latest
     container: golang:${{ matrix.go }}-stretch
     steps:
